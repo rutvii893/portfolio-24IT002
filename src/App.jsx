@@ -1,33 +1,24 @@
-import Header from "./components/Header";
-import Navbar from "./components/Navbar";
-import About from "./components/About";
-import Skills from "./components/Skills";
-import Projects from "./components/Projects";
-import Footer from "./components/Footer";
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
+import Notfound from './pages/Notfound';
+import Footer from './components/Footer';
 
 function App() {
-  const skillsByCategory = {
-    languages: ["C++", "Java", "JavaScript", "Python", "PHP"],
-    frontend: ["React.js", "HTML5", "CSS3", "Tailwind CSS", "Vite"],
-    backend: ["Node.js", "Express.js", "FastAPI", "Python"],
-    database: ["MySQL"],
-    ai: ["Google Gemini API", "LangChain", "FAISS", "OpenAI"],
-    tools: ["Git & GitHub", "VS Code"],
-  };
-
   return (
     <div id="top">
       <Navbar />
       <div className="page-shell">
-        <Header name="Rutvi Arora" themeColor="#2563eb" />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Notfound />} />
+        </Routes>
 
-        <main>
-        <About />
-        <Skills skillsByCategory={skillsByCategory} />
-        <Projects />
-      </main>
-
-      <Footer email="arorarutvi32@email.com" />
+        <Footer email="arorarutvi32@email.com" />
       </div>
     </div>
   );

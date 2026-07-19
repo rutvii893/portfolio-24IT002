@@ -275,6 +275,36 @@ a:hover {
   margin: 5px 0;
 }
 
+.contact-label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+.contact-input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.char-count {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.contact-tip {
+  margin-top: 12px;
+  padding: 10px;
+  background: #eef6ff;
+  border-left: 4px solid #2563eb;
+}
+
+.not-found {
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .about-content,
   .project-grid {

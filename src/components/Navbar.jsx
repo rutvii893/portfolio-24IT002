@@ -1,21 +1,22 @@
+import { NavLink } from 'react-router-dom';
+
 function Navbar() {
   const links = [
-    { href: "#top", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#skills", label: "Skills" },
-    { href: "#projects", label: "Projects" },
+    { to: '/', label: 'Home' },
+    { to: '/projects', label: 'Projects' },
+    { to: '/contact', label: 'Contact' },
   ];
 
   return (
     <nav className="top-nav" aria-label="Main navigation">
-      <a className="brand-mark" href="#top">
+      <NavLink className="brand-mark" to="/">
         RA
-      </a>
+      </NavLink>
       <div className="nav-links">
         {links.map((link) => (
-          <a key={link.label} href={link.href}>
+          <NavLink key={link.label} to={link.to}>
             {link.label}
-          </a>
+          </NavLink>
         ))}
       </div>
     </nav>
