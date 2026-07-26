@@ -1,107 +1,45 @@
-# Portfolio - Practical 1: React & Component Architecture
+# Portfolio - Practical 1, 2 & 3: React, Routing & API Integration
 
 **Course:** Advanced Web Development Frameworks (ITUE301)  
 **Semester:** 5th  
-**Practical -1:** Introduction to React and Component Architecture  
-
 
 ---
 
-## Practical Objective
+## Practical Objectives
 
-Build a React application using Vite with reusable, independently structured components for a student portfolio page.
+This project is a progressive student portfolio built with React and Vite. It covers three main practicals:
+1. **Component Architecture**: Building a responsive layout with independent, reusable components.
+2. **State Management & Routing**: Creating a multi-route application (Home, Projects, Contact).
+3. **API Integration (New!)**: Consuming a public REST API and handling asynchronous data with loading and error states.
 
-## Requirements Met
+## Practical 3: API Integration & Async Data
 
-- Created a React app using **Vite** as the build tool
-- Built **6 components** (exceeds minimum of 4):
-  - Header.jsx – Hero section with name and tagline
-  - Navbar.jsx – Navigation bar with smooth scrolling
-  - About.jsx – Bio and educational background
-  - Skills.jsx – Skills organized by category
-  - Projects.jsx – Featured projects showcase
-  - Footer.jsx – Contact and copyright info
-- All components are **independently structured and reusable**
-- **Props** passed to components:
-  - `name` prop to Header
-  - `skillsByCategory` prop to Skills
-  - `email` prop to Footer
-  - `themeColor` prop to Header
-- **No code duplication** – each component has a single responsibility
-- Clean **.gitignore** with node_modules excluded
-- Meaningful commit messages describing the work
+In this phase, we took the static Projects page and made it dynamic by hooking it up to a real backend server!
 
-## Component Architecture
+### What's New?
+- **Live Data**: The Projects page now automatically fetches my actual public repositories straight from the **GitHub REST API** (`https://api.github.com/users/rutvii893/repos`).
+- **Loading State**: Since fetching data from the internet takes time, I added a friendly `<Spinner />` component that shows up while the app is waiting for the data to arrive.
+- **Error Handling**: Sometimes the internet breaks! If the API call fails, the app catches the error and displays a custom `<ErrorMessage />` component, complete with a "Try Again" button so the user doesn't get stuck.
+- **Smart Searching**: I added a real-time search bar that filters the fetched repositories by their name instantly.
 
-```
-App.jsx
-├── Navbar.jsx
-├── Header.jsx (receives: name, themeColor props)
-├── About.jsx
-├── Skills.jsx (receives: skillsByCategory prop)
-├── Projects.jsx
-└── Footer.jsx (receives: email prop)
-```
-
-## Key Concepts Implemented
-
-- **JSX Syntax** – JavaScript expressions embedded in markup
-- **Functional Components** – Stateless, reusable functions returning UI
-- **Props** – Data passed from parent to child components
-- **Component Composition** – Building a complete UI from smaller pieces
-- **Reusability** – Each component can be used independently with different props
-
-## Technologies Used
-
-- **React 19** – Component-based UI framework
-- **Vite 8** – Fast build tool and dev server
-- **CSS3** – Styling with Flexbox and Grid
-- **Node.js & npm** – Development environment
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── Header.jsx
-│   ├── Navbar.jsx
-│   ├── About.jsx
-│   ├── Skills.jsx
-│   ├── Projects.jsx
-│   └── Footer.jsx
-├── App.jsx
-├── index.css
-├── main.jsx
-└── ...
-```
-
-## Learning Outcomes
-
-- Set up React development environment with Vite
-- Create reusable functional components
-- Use props for data flow between components
-- Compose a single-page layout from multiple components
-- Manage component state and understand re-rendering
+### Technical Highlights
+- Used React's `useEffect` hook with an empty dependency array `[]` to ensure the API is only called once when the component first loads.
+- Used the `fetch()` Promise API with `.then()`, `.catch()`, and `.finally()` blocks for clean, readable asynchronous logic.
+- Kept the UI looking sharp by mapping the live data directly into the existing CSS grid classes from Practical 1.
 
 ## How to Run
 
-```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-## Supplementary Tasks Completed
-
-- Added Navbar component with navigation links
-- Passed array of skills as props and rendered dynamically
-- Added theme color prop to Header with inline styling
-- Extended portfolio with additional Projects component
+1. Make sure you have Node.js installed.
+2. Clone this repository to your local machine.
+3. Open your terminal in the project folder and run:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+5. Navigate to the **Projects** tab to see the live API integration in action! No API keys or extra configuration needed.
 
 ---
 

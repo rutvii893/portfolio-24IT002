@@ -1,34 +1,34 @@
+import { useState, useEffect } from 'react';
+import Spinner from './Spinner';
+import ErrorMessage from './ErrorMessage';
+
 function Projects() {
-  const projects = [
-    {
-      title: "NeuroVault",
-      description:
-        "An AI-powered second brain app that helps users organize knowledge, semantically search documents, and chat with their personal content using RAG and modern LLM tools.",
-      stack: ["React", "FastAPI", "LangChain", "FAISS", "OpenAI"],
-      link: "https://github.com/rutvii893/NeuroVault.git",
-    },
-    {
-      title: "AmulNutriAI",
-      description:
-        "An AI nutrition and product recommendation system for Amul that offers personalized meal planning, nutrition analysis, recipe suggestions, and PDF report generation.",
-      stack: ["React", "Node.js", "Express", "MySQL", "Gemini API"],
-      link: "https://github.com/rutvii893/AmulNutriAi",
-    },
-    {
-      title: "AI Gurukul",
-      description:
-        "A GenAI education platform inspired by Indian Knowledge Systems, offering personalized guidance through AI personas and RAG-driven learning experiences.",
-      stack: ["React", "Python", "FastAPI", "Gemini", "Tailwind"],
-      link: "https://github.com/rutvii893/AiGurukul",
-    },
-    {
-      title: "ArtPortfolio",
-      description:
-        "A responsive art showcase platform with gallery browsing, profile management, and a clean UI for displaying creative work.",
-      stack: ["React", "HTML", "CSS", "JavaScript", "Tailwind"],
-      link: "https://github.com/rutvii893/Artportfolio",
-    },
-  ];
+  const [repos, setRepos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [search, setSearch] = useState('');
+
+  const fetchRepos = () => {
+    setLoading(true);
+    setError(null);
+    
+    fetch('https://api.github.com/users/rutvii893/repos')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch data');
+        return res.json();
+      })
+      .then((data) => setRepos(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchRepos();
+  }, []);
+
+  const filteredRepos = repos.filter(repo => 
+    repo.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <section id="projects" className="section">
@@ -37,22 +37,37 @@ function Projects() {
         <h2>Selected work</h2>
       </div>
 
-      <div className="project-grid">
-        {projects.map((project) => (
-          <article className="project-card" key={project.title}>
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
-            <div className="project-tags">
-              {project.stack.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
-            <a className="project-link" href={project.link} target="_blank" rel="noreferrer">
-              View on GitHub
-            </a>
-          </article>
-        ))}
-      </div>
+      <input 
+        type="text" 
+        placeholder="Search projects..." 
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{ width: '100%', padding: '10px', marginBottom: '30px', borderRadius: '4px', border: '1px solid #ccc' }}
+      />
+
+      {loading && <Spinner />}
+      {error && <ErrorMessage message={error} onRetry={fetchRepos} />}
+
+      {!loading && !error && (
+        <div className="project-grid">
+          {filteredRepos.map((repo) => (
+            <article className="project-card" key={repo.id}>
+              <h3>{repo.name}</h3>
+              <p>{repo.description || 'No description provided.'}</p>
+              <div className="project-tags">
+                <span>⭐ {repo.stargazers_count} Stars</span>
+                {repo.language && <span>{repo.language}</span>}
+              </div>
+              <a className="project-link" href={repo.html_url} target="_blank" rel="noreferrer">
+                View on GitHub
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+      {!loading && !error && filteredRepos.length === 0 && (
+        <p>No projects found.</p>
+      )}
     </section>
   );
 }
